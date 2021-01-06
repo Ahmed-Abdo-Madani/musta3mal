@@ -1305,6 +1305,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-community/hooks@github:react-native-community/hooks":
+  version "2.6.0"
+  resolved "https://codeload.github.com/react-native-community/hooks/tar.gz/a106eaaa9d33426fba7555ec3c95168c2680a753"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.3.tgz#4ba8ddb720221f432e443bd5f9117fd22cfd4762"

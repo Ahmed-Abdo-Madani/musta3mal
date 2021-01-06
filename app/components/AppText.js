@@ -5,6 +5,7 @@ import Colors from "../config/Colors";
 
 function AppText({
   text,
+  style,
   color = "black",
   size = 18,
   fontWeight = "bold",
@@ -15,6 +16,7 @@ function AppText({
       style={[
         styles.text,
         { color: Colors[color], fontSize: size, fontWeight, textTransform },
+        style,
       ]}
     >
       {text}
