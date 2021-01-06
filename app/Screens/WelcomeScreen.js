@@ -1,34 +1,71 @@
 import React from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from "react-native";
+
+import AppButton from "../components/AppButton";
+import AppText from "../components/AppText";
+
+function WelcomeScreen(props) {
+  return (
+    <ImageBackground
+      source={require("../assets/bg.jpg")}
+      blurRadius={2}
+      style={styles.background}
+    >
+      <View style={styles.logoContainer}>
+        <Image style={styles.logo} source={require("../assets/muslogo.png")} />
+        <AppText text="easy , fast & trusted" color="white" />
+      </View>
+      <View style={styles.btnContainer}>
+        <AppButton title="Login" />
+        <AppButton title="Register" color="secondary" />
+      </View>
+    </ImageBackground>
+  );
+}
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: "flex-end",
   },
-  loginBtn: {
+  btnContainer: {
     width: "100%",
-    height: 70,
-    backgroundColor: "#fc5c65",
+    padding: 10,
   },
-
-  registerBtn: {
+  logoContainer: {
+    position: "absolute",
+    top: 70,
     width: "100%",
-    height: 70,
-    backgroundColor: "#4ecdc4",
+    alignItems: "center",
+  },
+  logo: {
+    width: 200,
+    height: 150,
+    marginVertical: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: "gray",
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 1,
+      },
+      android: {
+        elevation: 10,
+      },
+      web: {
+        shadowColor: "gray",
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 1,
+      },
+    }),
   },
 });
-
-function WelcomeScreen(props) {
-  return (
-    <ImageBackground
-      source={require("../assets/bg.jpg")}
-      style={styles.background}
-    >
-      <View style={styles.loginBtn} />
-      <View style={styles.registerBtn} />
-    </ImageBackground>
-  );
-}
-
 export default WelcomeScreen;
