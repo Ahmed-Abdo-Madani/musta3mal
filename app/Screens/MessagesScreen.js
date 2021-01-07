@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import ListingItem from "../components/ListingItem";
 import Screen from "../components/Screen";
+import ListItemDeleteAction from "../components/ListItemDeleteAction";
 import Separator from "../components/Separator";
 
 const messages = [
@@ -37,6 +38,7 @@ export default function MessagesScreen() {
             title={item.title}
             subtitle={item.description}
             onPress={() => console.log(`Message Selected: ${item.title}`)}
+            renderRightActions={ListItemDeleteAction}
           />
         )}
       />
