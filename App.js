@@ -7,7 +7,7 @@ import ProductsScreen from "./app/Screens/ProductsScreen";
 import ProductDetailsScreen from "./app/Screens/ProductDetailsScreen";
 
 export default function App() {
-  return <ProductDetailsScreen />;
+  return <ViewImageScreen />;
 }
 
 const styles = StyleSheet.create({

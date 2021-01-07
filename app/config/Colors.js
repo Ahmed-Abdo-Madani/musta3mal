@@ -4,5 +4,5 @@ export default {
   black: "#000",
   white: "#fff",
   bgPrimary: "#f8f4f4",
-  textSecondary: "#eee",
+  textSecondary: "#aaa",
 };

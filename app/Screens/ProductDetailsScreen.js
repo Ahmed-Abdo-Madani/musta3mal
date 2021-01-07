@@ -1,7 +1,9 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
+
 import AppText from "../components/AppText";
 import Colors from "../config/Colors";
+import ListingItem from "../components/ListingItem";
 
 export default function ProductDetails() {
   return (
@@ -11,6 +13,11 @@ export default function ProductDetails() {
         <AppText text="Fabrige Egg" />
         <AppText text="$600" color="secondary" />
       </View>
+      <ListingItem
+        image={require("../assets/redJacket.jpg")}
+        title="the peacock"
+        subtitle="56 listings"
+      />
     </View>
   );
 }
