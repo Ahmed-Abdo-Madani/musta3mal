@@ -15,7 +15,7 @@ function AppButton({ title, color = "primary" }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "primary",
+    backgroundColor: Colors.primary,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",

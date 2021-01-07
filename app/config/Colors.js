@@ -4,5 +4,7 @@ export default {
   black: "#000",
   white: "#fff",
   bgPrimary: "#f8f4f4",
+  lightGray: "#EAE9E9",
+  meduimGray: "#6e6969",
   textSecondary: "#aaa",
 };
