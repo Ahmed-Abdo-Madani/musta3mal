@@ -4,6 +4,7 @@ import {
   View,
   Modal,
   FlatList,
+  Button,
   TouchableWithoutFeedback,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -14,7 +15,8 @@ import AppPickerItem from "./AppPickerItem";
 import Screen from "./Screen";
 
 export default function AppPicker({ icon, placeholder, ...otherProps }) {
-  const [modalVisable, setModalViable] = useState(false);
+  const [modalVisable, setModalVisable] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
   const items = [
     { title: "office", value: "1" },
     { title: "home", value: "2" },
@@ -23,7 +25,7 @@ export default function AppPicker({ icon, placeholder, ...otherProps }) {
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => setModalViable(true)}>
+      <TouchableWithoutFeedback onPress={() => setModalVisable(true)}>
         <View style={styles.container}>
           <MaterialCommunityIcons
             style={styles.icon}
@@ -32,7 +34,7 @@ export default function AppPicker({ icon, placeholder, ...otherProps }) {
             color={icon.color || DefaultStyles.colors.darkGray}
           />
           <AppText
-            text={placeholder}
+            text={selectedItem ? selectedItem.title : placeholder}
             style={[DefaultStyles.text, styles.text]}
             {...otherProps}
           />
@@ -46,10 +48,19 @@ export default function AppPicker({ icon, placeholder, ...otherProps }) {
       </TouchableWithoutFeedback>
       <Modal visible={modalVisable} animationType="slide">
         <Screen>
+          <Button title="Close" onPress={() => setModalVisable(false)} />
           <FlatList
             data={items}
             keyExtractor={(item) => item.title}
-            renderItem={({ item }) => <AppPickerItem item={item} />}
+            renderItem={({ item }) => (
+              <AppPickerItem
+                item={item}
+                onPress={() => {
+                  setSelectedItem(item);
+                  setModalVisable(false);
+                }}
+              />
+            )}
           />
         </Screen>
       </Modal>
