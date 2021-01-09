@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import ListingItem from "../components/ListingItem";
 import Screen from "../components/Screen";
 import ListItemDeleteAction from "../components/ListItemDeleteAction";
 import Separator from "../components/Separator";
 
-const messages = [
+const initialMessages = [
   {
     id: 1,
     title: "title 1",
@@ -26,6 +26,12 @@ const messages = [
   },
 ];
 export default function MessagesScreen() {
+  const [messages, setMessages] = useState(initialMessages);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const deleteHandler = (message) => {
+    setMessages(messages.filter((m) => m.id !== message.id));
+  };
   return (
     <Screen>
       <FlatList
@@ -38,9 +44,22 @@ export default function MessagesScreen() {
             title={item.title}
             subtitle={item.description}
             onPress={() => console.log(`Message Selected: ${item.title}`)}
-            renderRightActions={ListItemDeleteAction}
+            renderRightActions={() => (
+              <ListItemDeleteAction onPress={() => deleteHandler(item)} />
+            )}
           />
         )}
+        refreshing={refreshing}
+        onRefresh={() => {
+          setMessages([
+            {
+              id: 45,
+              title: "Fresh Sub",
+              description: "description 45",
+              image: require("../assets/watashi.jpg"),
+            },
+          ]);
+        }}
       />
     </Screen>
   );

@@ -7,6 +7,7 @@ import AppText from "./AppText";
 
 export default function ListingItem({
   image,
+  ImageComponent,
   title,
   subtitle,
   onPress,
@@ -16,15 +17,18 @@ export default function ListingItem({
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableHighlight underlayColor={Colors.lightGray} onPress={onPress}>
         <View style={styles.container}>
-          <Image style={styles.image} source={image} />
+          {ImageComponent}
+          {image && <Image style={styles.image} source={image} />}
           <View style={styles.titleContainer}>
             <AppText style={styles.title} text={title} />
-            <AppText
-              text={subtitle}
-              color="textSecondary"
-              fontWeight="normal"
-              textTransform="lowercase"
-            />
+            {subtitle && (
+              <AppText
+                text={subtitle}
+                color="textSecondary"
+                fontWeight="normal"
+                textTransform="lowercase"
+              />
+            )}
           </View>
         </View>
       </TouchableHighlight>
@@ -35,7 +39,8 @@ export default function ListingItem({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    padding: 15,
+    padding: 13,
+    backgroundColor: Colors.white,
   },
   image: {
     height: 70,
@@ -43,7 +48,8 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   titleContainer: {
-    padding: 13,
+    paddingLeft: 10,
+    justifyContent: "center",
   },
   title: {
     marginBottom: 5,

@@ -6,10 +6,11 @@ import Colors from "../config/Colors";
 function AppText({
   text,
   style,
+  onPress,
   color = "black",
   size = 18,
   fontWeight = "bold",
-  textTransform = "uppercase",
+  textTransform = "capitalize",
 }) {
   return (
     <Text
@@ -18,6 +19,7 @@ function AppText({
         { color: Colors[color], fontSize: size, fontWeight, textTransform },
         style,
       ]}
+      onPress={onPress}
     >
       {text}
     </Text>
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
         ? "Avenir"
         : "Arial",
     fontWeight: "bold",
-    textTransform: "uppercase",
+    textTransform: "capitalize",
   },
 });
 

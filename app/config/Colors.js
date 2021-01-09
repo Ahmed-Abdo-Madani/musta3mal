@@ -5,7 +5,8 @@ export default {
   white: "#fff",
   danger: "#ff5252",
   bgPrimary: "#f8f4f4",
-  lightGray: "#EAE9E9",
-  meduimGray: "#6e6969",
+  lightGray: "#F5F4F1",
+  meduimGray: "#CAC8C4",
+  darkGray: "#0c0c0c",
   textSecondary: "#aaa",
 };
