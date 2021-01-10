@@ -7,6 +7,7 @@ import ProductsScreen from "./app/Screens/ProductsScreen";
 import ProductDetailsScreen from "./app/Screens/ProductDetailsScreen";
 import MessagesScreen from "./app/Screens/MessagesScreen";
 import AccountScreen from "./app/Screens/AccountScreen";
+import LoginScreen from "./app/Screens/LoginScreen";
 import ListingsScreen from "./app/Screens/ListingsScreen";
 
 import AppIcon from "./app/components/AppIcon";
@@ -16,15 +17,7 @@ import Screen from "./app/components/Screen";
 import AppPicker from "./app/components/AppPicker";
 
 export default function App() {
-  return (
-    <Screen>
-      <AppPicker icon={{ name: "apps" }} placeholder="Category" />
-      <AppTextInput
-        icon={{ name: "email" }}
-        placeholder="Write your Email here"
-      />
-    </Screen>
-  );
+  return <LoginScreen />;
 }
 
 const styles = StyleSheet.create({

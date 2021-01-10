@@ -3,9 +3,10 @@ import { Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
 
 import Colors from "../config/Colors";
 
-function AppButton({ title, color = "primary" }) {
+function AppButton({ title, color = "primary", onPress }) {
   return (
     <TouchableOpacity
+      onPress={onPress}
       style={[styles.container, { backgroundColor: Colors[color] }]}
     >
       <Text style={styles.title}>{title} </Text>
@@ -25,9 +26,9 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         shadowColor: "gray",
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 1,
+        shadowRadius: 5,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
       },
       android: {
         elevation: 10,
