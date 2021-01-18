@@ -1,24 +1,32 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
+import { StyleSheet } from "react-native";
 
-import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import Screen from "../components/Screen";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+const validationSchema = yup.object().shape({
+  userName: yup.string().required().min(5).max(21).label("UserName"),
+  email: yup.string().required().email().label("Email"),
+  password: yup.string().required().min(7).label("Password"),
 });
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   return (
     <Screen style={styles.conatianer}>
-      <Image style={styles.logo} source={require("../assets/muslogo.png")} />
       <AppForm
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ userName: "", email: "", password: "" }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
+        <AppFormField
+          name="userName"
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon={{ name: "account" }}
+          textContentType="username"
+          placeholder="User Name"
+        />
         <AppFormField
           name="email"
           autoCapitalize="none"
@@ -30,13 +38,14 @@ export default function LoginScreen() {
         />
         <AppFormField
           name="password"
-          autoCapitalize="none"
           autoCorrect={false}
+          autoCapitalize="none"
           icon={{ name: "lock" }}
           placeholder="Password"
+          textContentType="password"
           secureTextEntry
         />
-        <SubmitButton title="Login" />
+        <SubmitButton title="Register" />
       </AppForm>
     </Screen>
   );
@@ -45,12 +54,5 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   conatianer: {
     paddingHorizontal: 10,
-  },
-  logo: {
-    width: 130,
-    height: 100,
-    marginTop: 50,
-    marginBottom: 25,
-    alignSelf: "center",
   },
 });

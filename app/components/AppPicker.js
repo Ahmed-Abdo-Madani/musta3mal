@@ -14,14 +14,9 @@ import AppText from "./AppText";
 import AppPickerItem from "./AppPickerItem";
 import Screen from "./Screen";
 
-export default function AppPicker({ icon, placeholder, ...otherProps }) {
+export default function AppPicker({ icon, placeholder, items, ...otherProps }) {
   const [modalVisable, setModalVisable] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
-  const items = [
-    { title: "office", value: "1" },
-    { title: "home", value: "2" },
-    { title: "weareable", value: "3" },
-  ];
 
   return (
     <>
@@ -31,11 +26,15 @@ export default function AppPicker({ icon, placeholder, ...otherProps }) {
             style={styles.icon}
             name={icon.name}
             size={icon.size || 20}
-            color={icon.color || DefaultStyles.colors.darkGray}
+            color={icon.color || DefaultStyles.colors.placeholder}
           />
           <AppText
             text={selectedItem ? selectedItem.title : placeholder}
-            style={[DefaultStyles.text, styles.text]}
+            style={
+              selectedItem
+                ? [DefaultStyles.text, styles.text]
+                : [{ color: DefaultStyles.colors.placeholder }, styles.text]
+            }
             {...otherProps}
           />
           <MaterialCommunityIcons

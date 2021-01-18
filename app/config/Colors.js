@@ -7,7 +7,8 @@ export default {
   danger: "#ff5252",
   bgPrimary: "#f8f4f4",
   lightGray: "#F5F4F1",
-  meduimGray: "#CAC8C4",
+  meduimGray: "#D9D9D9",
   darkGray: "#0c0c0c",
   textSecondary: "#aaa",
+  placeholder: "#A29F9F",
 };

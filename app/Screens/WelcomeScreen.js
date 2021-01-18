@@ -10,7 +10,7 @@ import {
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 
-function WelcomeScreen(props) {
+function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/bg.jpg")}
@@ -22,8 +22,12 @@ function WelcomeScreen(props) {
         <AppText text="easy , fast & trusted" color="white" />
       </View>
       <View style={styles.btnContainer}>
-        <AppButton title="Login" />
-        <AppButton title="Register" color="secondary" />
+        <AppButton title="Login" onPress={() => navigation.navigate("login")} />
+        <AppButton
+          title="Register"
+          color="secondary"
+          onPress={() => navigation.navigate("register")}
+        />
       </View>
     </ImageBackground>
   );

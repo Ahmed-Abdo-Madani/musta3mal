@@ -5,13 +5,14 @@ import AppText from "../components/AppText";
 import Colors from "../config/Colors";
 import ListingItem from "../components/ListingItem";
 
-export default function ProductDetails() {
+export default function ProductDetails({ route }) {
+  const listing = route.params;
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../assets/redJacket.jpg")} />
+      <Image style={styles.image} source={{ uri: listing.images[0].url }} />
       <View style={styles.titleContainer}>
-        <AppText text="Fabrige Egg" />
-        <AppText text="$600" color="secondary" />
+        <AppText text={listing.title} />
+        <AppText text={`$${listing.price}`} color="secondary" />
       </View>
       <ListingItem
         image={require("../assets/redJacket.jpg")}

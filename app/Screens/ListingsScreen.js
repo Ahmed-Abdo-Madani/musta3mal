@@ -1,59 +1,51 @@
-import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text } from "react-native";
+import ListingsApi from "../api/listings";
 
 import Card from "../components/Card";
+import ActivityIndicator from "../components/ActivityIndicator";
+import AppButton from "../components/AppButton";
+import AppText from "../components/AppText";
 import Screen from "../components/Screen";
 import Colors from "../config/Colors";
 
-const listings = [
-  {
-    id: 1,
-    image: require("../assets/pd1.jpg"),
-    title: "nice Appartment",
-    price: 6000,
-  },
-  {
-    id: 2,
-    image: require("../assets/redJacket.jpg"),
-    title: "Fabrege Egg",
-    price: 999999,
-  },
-  {
-    id: 3,
-    image: require("../assets/pd1.jpg"),
-    title: "nice Appartment",
-    price: 6000,
-  },
-  {
-    id: 4,
-    image: require("../assets/redJacket.jpg"),
-    title: "Fabrege Egg",
-    price: 999999,
-  },
-  {
-    id: 5,
-    image: require("../assets/pd1.jpg"),
-    title: "nice Appartment",
-    price: 6000,
-  },
-  {
-    id: 6,
-    image: require("../assets/redJacket.jpg"),
-    title: "Fabrege Egg",
-    price: 999999,
-  },
-];
-export default function ListingsScreen() {
+export default function ListingsScreen({ navigation }) {
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const getListings = async () => {
+    setLoading(true);
+    const response = await ListingsApi.getListings();
+    setLoading(false);
+
+    if (!response.ok) return setError(true);
+
+    setError(false);
+    setListings(response.data);
+  };
+  useEffect(() => {
+    getListings();
+  }, []);
+
   return (
     <Screen style={styles.container}>
+      {error && (
+        <>
+          <AppText text="Sorry connection error try again.!" />
+          <AppButton title="Retry" onPress={getListings} />
+        </>
+      )}
+      <ActivityIndicator visable={loading} />
       <FlatList
         data={listings}
-        keyExtractor={(listings) => listings.id.toString()}
+        keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
-            image={item.image}
+            imageUrl={item.images[0].url}
             title={item.title}
             subtitle={"$" + item.price}
+            onPress={() => navigation.navigate("Listing Details", item)}
           />
         )}
       />
