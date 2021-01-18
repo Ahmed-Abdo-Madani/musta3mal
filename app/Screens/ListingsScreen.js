@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
+
+import useApi from "../hooks/useApi";
 import ListingsApi from "../api/listings";
 
 import Card from "../components/Card";
@@ -10,22 +12,9 @@ import Screen from "../components/Screen";
 import Colors from "../config/Colors";
 
 export default function ListingsScreen({ navigation }) {
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const getListings = async () => {
-    setLoading(true);
-    const response = await ListingsApi.getListings();
-    setLoading(false);
-
-    if (!response.ok) return setError(true);
-
-    setError(false);
-    setListings(response.data);
-  };
+  const { data, request, loading, error } = useApi(ListingsApi.getListings);
   useEffect(() => {
-    getListings();
+    request();
   }, []);
 
   return (
@@ -33,12 +22,12 @@ export default function ListingsScreen({ navigation }) {
       {error && (
         <>
           <AppText text="Sorry connection error try again.!" />
-          <AppButton title="Retry" onPress={getListings} />
+          <AppButton title="Retry" onPress={request} />
         </>
       )}
       <ActivityIndicator visable={loading} />
       <FlatList
-        data={listings}
+        data={data}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
