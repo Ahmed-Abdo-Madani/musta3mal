@@ -12,7 +12,7 @@ export default function AppFormPicker({ name, placeholder, items }) {
       <AppPicker
         icon={{ name: "apps" }}
         items={items}
-        onSelectItem={(item) => setFieldValue(name, item)}
+        onSelectItem={(item) => setFieldValue(name, item.value)}
         placeholder={placeholder}
         selectedItem={values[name]}
       />
