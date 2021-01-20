@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
   title: yup.string().required().min(1).label("Title"),
   price: yup.number().required().min(1).max(90000).label("Price"),
   description: yup.string().label("Description"),
-  category: yup.object().nullable().label("Category"),
+  category: yup.object().required().nullable().label("Category"),
 });
 
 const items = [

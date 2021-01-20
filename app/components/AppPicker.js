@@ -14,7 +14,13 @@ import AppText from "./AppText";
 import AppPickerItem from "./AppPickerItem";
 import Screen from "./Screen";
 
-export default function AppPicker({ icon, placeholder, items, ...otherProps }) {
+export default function AppPicker({
+  icon,
+  items,
+  placeholder,
+  onSelectItem,
+  ...otherProps
+}) {
   const [modalVisable, setModalVisable] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
 
@@ -55,8 +61,9 @@ export default function AppPicker({ icon, placeholder, items, ...otherProps }) {
               <AppPickerItem
                 item={item}
                 onPress={() => {
-                  setSelectedItem(item);
                   setModalVisable(false);
+                  setSelectedItem(item);
+                  onSelectItem(item);
                 }}
               />
             )}
