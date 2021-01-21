@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
-import useLocation from "../hooks/useLocation";
-import useApi from "../hooks/useApi";
-import listingApi from "../api/listings";
-
 import { StyleSheet } from "react-native";
 
+import useLocation from "../hooks/useLocation";
+import listingApi from "../api/listings";
+
+import Screen from "../components/Screen";
+import UploadProgressBar from "../components/UploadProgressBar";
 import {
   AppForm,
   AppFormField,
@@ -13,7 +14,6 @@ import {
   AppFormPicker,
   AppFormImagePicker,
 } from "../components/forms";
-import Screen from "../components/Screen";
 
 const validationSchema = yup.object().shape({
   images: yup.array().min(1, "Please Select at least one image."),
@@ -30,15 +30,31 @@ const items = [
 ];
 
 export default function ListingEditScreen() {
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   const location = useLocation();
   const handleSupmit = async (listing) => {
-    const result = await listingApi.addListings({ ...listing, location });
-    if (!result.ok) return alert("Error saving Data to Server");
-    alert("success");
+    setUploadProgress(0);
+    setUploadVisible(true);
+    const result = await listingApi.addListings(
+      { ...listing, location },
+      (onUploadProgress) => setUploadProgress(onUploadProgress)
+    );
+    if (!result.ok) {
+      setUploadVisible(false);
+      return alert("Error saving Data to Server");
+    }
   };
 
   return (
     <Screen style={styles.conatianer}>
+      <UploadProgressBar
+        progress={uploadProgress}
+        visible={uploadVisible}
+        onDone={() => setUploadVisible(false)}
+      />
+
       <AppForm
         initialValues={{
           images: [],
