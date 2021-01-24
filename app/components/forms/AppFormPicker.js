@@ -13,11 +13,11 @@ export default function AppFormPicker({ name, placeholder, items }) {
         icon={{ name: "apps" }}
         items={items}
         name={name}
-        selectedItem={values[name]}
         onSelectItem={(item) => {
           setFieldValue(name, item);
         }}
         placeholder={placeholder}
+        selectedItem={values[name]}
       />
       <AppErrorMessage error={errors[name]} visible={touched[name]} />
     </>

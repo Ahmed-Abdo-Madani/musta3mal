@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Image } from "react-native";
 import * as Yup from "yup";
+import jwtDecode from "jwt-decode";
 
 import Screen from "../components/Screen";
-import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import {
+  AppForm,
+  AppFormField,
+  SubmitButton,
+  AppErrorMessage,
+} from "../components/forms";
+import authApi from "../api/auth";
+import AuthContext from "../auth/context";
+import AuthStorage from "../auth/storage";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -11,12 +20,28 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function LoginScreen() {
+  const [loadingFailed, setLoadingFailed] = useState(false);
+  const authContext = useContext(AuthContext);
+
+  const handelSubmit = async ({ email, password }) => {
+    const response = await authApi.login(email, password);
+    if (!response.ok) return setLoadingFailed(true);
+    setLoadingFailed(false);
+    const user = jwtDecode(response.data);
+    authContext.setUser(user);
+    AuthStorage.storeToken(response.data);
+  };
+
   return (
     <Screen style={styles.conatianer}>
       <Image style={styles.logo} source={require("../assets/muslogo.png")} />
+      <AppErrorMessage
+        error="Wring Email or Password"
+        visible={loadingFailed}
+      />
       <AppForm
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handelSubmit}
         validationSchema={validationSchema}
       >
         <AppFormField

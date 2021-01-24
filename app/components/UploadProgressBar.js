@@ -8,19 +8,19 @@ const UploadProgressBar = ({ onDone, progress = 0, visible = false }) => {
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
-        {progress < 1 ? (
-          <Progress.Bar
-            progress={progress}
-            color={Colors.primary}
-            width={200}
-          />
-        ) : (
+        {progress === 1 ? (
           <LottieView
             source={require("../assets/animations/done.json")}
             autoPlay
             loop={false}
             onAnimationFinish={onDone}
             style={styles.animation}
+          />
+        ) : (
+          <Progress.Bar
+            progress={progress}
+            color={Colors.primary}
+            width={200}
           />
         )}
       </View>

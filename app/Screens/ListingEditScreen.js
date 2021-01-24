@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as yup from "yup";
-import { StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 
 import useLocation from "../hooks/useLocation";
 import listingApi from "../api/listings";
@@ -34,7 +34,7 @@ export default function ListingEditScreen() {
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const location = useLocation();
-  const handleSupmit = async (listing) => {
+  const handleSupmit = async (listing, { resetForm }) => {
     setUploadProgress(0);
     setUploadVisible(true);
     const result = await listingApi.addListings(
@@ -45,10 +45,12 @@ export default function ListingEditScreen() {
       setUploadVisible(false);
       return alert("Error saving Data to Server");
     }
+    resetForm();
   };
 
   return (
     <Screen style={styles.conatianer}>
+      <StatusBar barStyle="dark-content" />
       <UploadProgressBar
         progress={uploadProgress}
         visible={uploadVisible}
@@ -101,5 +103,6 @@ export default function ListingEditScreen() {
 const styles = StyleSheet.create({
   conatianer: {
     paddingHorizontal: 10,
+    paddingTop: 11,
   },
 });

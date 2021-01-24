@@ -19,10 +19,10 @@ export default function AppPicker({
   items,
   placeholder,
   onSelectItem,
+  selectedItem,
   ...otherProps
 }) {
   const [modalVisable, setModalVisable] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
 
   return (
     <>
@@ -62,7 +62,6 @@ export default function AppPicker({
                 item={item}
                 onPress={() => {
                   setModalVisable(false);
-                  setSelectedItem(item);
                   onSelectItem(item);
                 }}
               />

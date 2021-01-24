@@ -1,11 +1,14 @@
-import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useContext } from "react";
+import { FlatList, StyleSheet, StatusBar, View } from "react-native";
 
 import Screen from "../components/Screen";
 import ListingItem from "../components/ListingItem";
 import Separator from "../components/Separator";
 import Colors from "../config/Colors";
 import AppIcon from "../components/AppIcon";
+
+import AuthContext from "../auth/context";
+import AuthStorage from "../auth/storage";
 
 const menuItems = [
   {
@@ -27,12 +30,20 @@ const menuItems = [
   },
 ];
 
+const handelLogout = () => {
+  setUser(null);
+  AuthStorage.removeToken();
+};
+
 export default function AccountScreen({ navigation }) {
+  const { user, setUser } = useContext(AuthContext);
   return (
     <Screen style={styles.screen}>
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
         <ListingItem
-          title="Watashi Des"
+          title={user.name}
+          subtitle={user.email}
           image={require("../assets/watashi.jpg")}
         />
       </View>
@@ -59,6 +70,7 @@ export default function AccountScreen({ navigation }) {
         <ListingItem
           title="log out"
           ImageComponent={<AppIcon name="logout" backgroundColor="#8C8C8C" />}
+          onPress={handelLogout}
         />
       </View>
     </Screen>
