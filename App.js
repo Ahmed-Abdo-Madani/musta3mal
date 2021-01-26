@@ -1,52 +1,41 @@
 import React, { useState } from "react";
-import { Button, Image, StyleSheet, View } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StyleSheet, View } from "react-native";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { useNetInfo } from "@react-native-community/netinfo";
-
 import constants from "expo-constants";
+import AppLoading from "expo-app-loading";
 
-import WelcomeScreen from "./app/Screens/WelcomeScreen";
-import ViewImageScreen from "./app/Screens/ViewImageScreen";
-import ProductsScreen from "./app/Screens/ProductsScreen";
-import ProductDetailsScreen from "./app/Screens/ProductDetailsScreen";
-import MessagesScreen from "./app/Screens/MessagesScreen";
-import AccountScreen from "./app/Screens/AccountScreen";
-import LoginScreen from "./app/Screens/LoginScreen";
-import ListingsScreen from "./app/Screens/ListingsScreen";
-import ListingEditScreen from "./app/Screens/ListingEditScreen";
-import RegisterScreen from "./app/Screens/RegisterScreen";
-
-import AppIcon from "./app/components/AppIcon";
-import ImageInputList from "./app/components/ImageInputList";
-import ListingItem from "./app/components/ListingItem";
-import AppTextInput from "./app/components/AppTextInput";
 import AppText from "./app/components/AppText";
-import Screen from "./app/components/Screen";
-import AppPicker from "./app/components/AppPicker";
+
 import Colors from "./app/config/Colors";
 import AuthNavigation from "./app/navigation/AuthNavigation";
 import AppNavigator from "./app/navigation/AppNavigator";
 import NavigationTheme from "./app/navigation/NavigationTheme";
 
 import AuthContext from "./app/auth/context";
+import AuthStorage from "./app/auth/storage";
 
 export default function App() {
   const netInfo = useNetInfo();
   const [user, setUser] = useState();
+  const [isReady, setIsReady] = useState(false);
 
   const secureStorageUser = async () => {
-    const token = await AuthStorage.getToken();
-    if (!token) return null;
-    setUser(jwtDecode(token));
+    const user = await AuthStorage.getUser();
+    if (!user) return null;
+    setUser(user);
   };
-  useEffect(() => {
-    secureStorageUser();
-  }, []);
 
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={secureStorageUser}
+        onFinish={() => setIsReady(true)}
+        onError={(error) => console.log(error)}
+      />
+    );
+  }
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       {netInfo.isInternetReachable === false && (

@@ -8,7 +8,7 @@ import Colors from "../config/Colors";
 import AppIcon from "../components/AppIcon";
 
 import AuthContext from "../auth/context";
-import AuthStorage from "../auth/storage";
+import useAuth from "../auth/useAuth";
 
 const menuItems = [
   {
@@ -30,13 +30,10 @@ const menuItems = [
   },
 ];
 
-const handelLogout = () => {
-  setUser(null);
-  AuthStorage.removeToken();
-};
-
 export default function AccountScreen({ navigation }) {
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const { logout } = useAuth();
+
   return (
     <Screen style={styles.screen}>
       <StatusBar barStyle="dark-content" />
@@ -70,7 +67,7 @@ export default function AccountScreen({ navigation }) {
         <ListingItem
           title="log out"
           ImageComponent={<AppIcon name="logout" backgroundColor="#8C8C8C" />}
-          onPress={handelLogout}
+          onPress={() => logout()}
         />
       </View>
     </Screen>
